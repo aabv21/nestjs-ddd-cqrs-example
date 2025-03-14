@@ -1,28 +1,42 @@
 // Dependencies
-import { Controller, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  Param,
+  BadRequestException,
+  Get,
+} from '@nestjs/common';
 
 // Dto
 import { CreateCamperRequestDto } from './dto/request/create-camper-request.dto';
+import { UpdateCamperAllergiesRequestDto } from './dto/request/update-camper-allergies-request.dto';
 
 // Cqrs
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 
 // Commands
-import { CreateCamperCommand } from './commands/create-camper.command';
+import { CreateCamperCommand } from './commands/create-camper/create-camper.command';
+import { UpdateAllergiesCommand } from './commands/update-allergies/update-allergies.command';
+
+// Queries
+import { CampersQuery } from './queries/campers.query';
+
+// Dto
+import { CamperDto } from './dto/camper.dto';
 
 @Controller('campers')
 export class CampersController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+  ) {}
 
-  // @Get(':id')
-  // async getCamper(@Param('id') camperId: string): Promise<void> {
-  //   return this.campersService.findOne(+camperId);
-  // }
-
-  // @Get()
-  // getCampers(): Promise<void> {
-  //   return this.campersService.findAll();
-  // }
+  @Get()
+  getCampers(): Promise<CamperDto[]> {
+    return this.queryBus.execute<CampersQuery, CamperDto[]>(new CampersQuery());
+  }
 
   @Post()
   async createCamper(
@@ -33,11 +47,19 @@ export class CampersController {
     );
   }
 
-  // @Patch(':id')
-  // updateCamperAllergies(
-  //   @Param('id') camperId: string,
-  //   @Body() updateCamperAllergiesRequest: UpdateCamperAllergiesRequestDto,
-  // ): Promise<void> {
-  //   return this.campersService.update(+camperId, updateCamperAllergiesRequest);
-  // }
+  @Patch(':id/allergies')
+  async updateCamperAllergies(
+    @Param('id') camperId: string,
+    @Body() updateCamperAllergiesRequest: UpdateCamperAllergiesRequestDto,
+  ): Promise<void> {
+    const { allergies } = updateCamperAllergiesRequest;
+
+    if (!allergies) {
+      throw new BadRequestException('Allergies are required');
+    }
+
+    await this.commandBus.execute<UpdateAllergiesCommand, void>(
+      new UpdateAllergiesCommand(camperId, allergies),
+    );
+  }
 }

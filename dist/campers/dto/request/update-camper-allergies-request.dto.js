@@ -4,4 +4,4 @@ exports.UpdateCamperAllergiesRequestDto = void 0;
 class UpdateCamperAllergiesRequestDto {
 }
 exports.UpdateCamperAllergiesRequestDto = UpdateCamperAllergiesRequestDto;
-//# sourceMappingURL=update-camper-allergies.dto.js.map
+//# sourceMappingURL=update-camper-allergies-request.dto.js.map

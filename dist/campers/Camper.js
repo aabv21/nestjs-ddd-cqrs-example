@@ -22,6 +22,13 @@ class Camper extends cqrs_1.AggregateRoot {
     getAllergies() {
         return [...this.allergies];
     }
+    updateAllergies(allergies) {
+        const allergiesLower = allergies.map((allergy) => allergy.toLowerCase());
+        if (allergiesLower.includes('chocolate')) {
+            throw new Error('Allergy may not be chocolate');
+        }
+        this.allergies = [...allergies];
+    }
 }
 exports.Camper = Camper;
 //# sourceMappingURL=Camper.js.map

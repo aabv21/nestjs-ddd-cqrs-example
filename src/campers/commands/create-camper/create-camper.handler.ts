@@ -5,7 +5,7 @@ import { ICommandHandler, CommandHandler, EventPublisher } from '@nestjs/cqrs';
 import { CreateCamperCommand } from './create-camper.command';
 
 // Factories
-import { CamperFactory } from '../camper.factory';
+import { CamperFactory } from '../../camper.factory';
 
 @CommandHandler(CreateCamperCommand)
 export class CreateCamperHandler

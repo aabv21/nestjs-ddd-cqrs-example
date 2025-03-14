@@ -17,6 +17,8 @@ const commands_1 = require("./commands");
 const events_1 = require("../events");
 const mongoose_1 = require("@nestjs/mongoose");
 const camper_schema_1 = require("./db/camper.schema");
+const queries_1 = require("./queries");
+const camper_dto_repository_1 = require("./db/camper-dto.repository");
 let CampersModule = class CampersModule {
 };
 exports.CampersModule = CampersModule;
@@ -36,8 +38,10 @@ exports.CampersModule = CampersModule = __decorate([
             camper_entity_repository_1.CamperEntityRepository,
             camper_schema_factory_1.CamperSchemaFactory,
             camper_factory_1.CamperFactory,
+            camper_dto_repository_1.CamperDtoRepository,
             ...commands_1.CommandHandlers,
             ...events_1.EventHandlers,
+            ...queries_1.CampersQueriesHandlers,
         ],
     })
 ], CampersModule);

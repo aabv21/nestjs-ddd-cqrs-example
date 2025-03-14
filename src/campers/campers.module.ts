@@ -19,6 +19,12 @@ import { EventHandlers } from '../events';
 import { MongooseModule, SchemaFactory } from '@nestjs/mongoose';
 import { CamperSchema } from './db/camper.schema';
 
+// Queries
+import { CampersQueriesHandlers } from './queries';
+
+// Dto
+import { CamperDtoRepository } from './db/camper-dto.repository';
+
 @Module({
   imports: [
     CqrsModule,
@@ -34,8 +40,10 @@ import { CamperSchema } from './db/camper.schema';
     CamperEntityRepository,
     CamperSchemaFactory,
     CamperFactory,
+    CamperDtoRepository,
     ...CommandHandlers,
     ...EventHandlers,
+    ...CampersQueriesHandlers,
   ],
 })
 export class CampersModule {}

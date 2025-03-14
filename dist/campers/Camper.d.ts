@@ -3,10 +3,11 @@ export declare class Camper extends AggregateRoot {
     private readonly id;
     private readonly name;
     private readonly age;
-    private readonly allergies;
+    private allergies;
     constructor(id: string, name: string, age: number, allergies: string[]);
     getId(): string;
     getName(): string;
     getAge(): number;
     getAllergies(): string[];
+    updateAllergies(allergies: string[]): void;
 }

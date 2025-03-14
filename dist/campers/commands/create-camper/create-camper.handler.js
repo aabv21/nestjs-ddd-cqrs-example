@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateCamperHandler = void 0;
 const cqrs_1 = require("@nestjs/cqrs");
 const create_camper_command_1 = require("./create-camper.command");
-const camper_factory_1 = require("../camper.factory");
+const camper_factory_1 = require("../../camper.factory");
 let CreateCamperHandler = class CreateCamperHandler {
     constructor(camperFactory, eventPublisher) {
         this.camperFactory = camperFactory;
